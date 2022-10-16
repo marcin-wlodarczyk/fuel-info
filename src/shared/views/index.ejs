@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Fuel info</title>
+    <style>
+        #prices {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .row  {
+            display: flex;
+            width: 800px
+        }
+
+        .cell {
+            text-align: center;
+            flex: 1;
+        }
+
+        body {
+            padding: 10px;
+        }
+
+        table {
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+
+        tr:nth-child(even) {
+            background-color: #eee;
+        }
+
+        tr:nth-child(odd) {
+            background-color: #fff;
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body class="container">
+<main>
+    <div id="prices">
+        <% for (const [city, tuples] of Object.entries(data)) { %>
+            <h2><%=city%></h2>
+            <table>
+                <tr class="row">
+                    <th class="cell">Gas Station</th>
+                    <th class="cell">Diesel</th>
+                    <th class="cell">Gasoline</th>
+                    <th class="cell">Last Update</th>
+                    <th class="cell">Maps</th>
+                </tr>
+
+                <% for(const [gs, info] of tuples) { %>
+                    <tr class="row">
+                        <td class="cell"><%= gs.name %></td>
+                        <td class="cell"><%= info.pricing.diesel %> €/liter</td>
+                        <td class="cell"><%= info.pricing.gasoline %> €/liter</td>
+                        <td class="cell"><%= info.updatedAt.toFormat('yyyy-MM-dd HH:mm') %></td>
+                        <td class="cell"><a target="_blank" href="<%= gs.mapsUrl %>">Navigate</a></td>
+                    </tr>
+                <% } %>
+            </table>
+        <% } %>
+    </div>
+</main>
+<footer></footer>
+</body>
+</html>
